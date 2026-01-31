@@ -1,0 +1,1 @@
+# wiremock-template-projects
