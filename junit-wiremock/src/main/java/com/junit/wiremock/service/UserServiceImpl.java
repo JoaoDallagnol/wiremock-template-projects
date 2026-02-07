@@ -1,5 +1,7 @@
 package com.junit.wiremock.service;
 
+import com.junit.wiremock.client.EmailValidationClient;
+import com.junit.wiremock.dto.EmailValidationResponse;
 import com.junit.wiremock.entity.User;
 import com.junit.wiremock.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     
     private final UserRepository userRepository;
+    private final EmailValidationClient emailValidationClient;
 
     @Override
     public List<User> getAllUsers() {
@@ -25,6 +28,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
+        EmailValidationResponse validation = emailValidationClient.validateEmail(user.getEmail());
+        if (!validation.isValid()) {
+            throw new RuntimeException("Invalid email: " + validation.getReason());
+        }
         return userRepository.save(user);
     }
 

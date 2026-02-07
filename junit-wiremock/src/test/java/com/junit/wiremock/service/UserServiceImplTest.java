@@ -1,5 +1,7 @@
 package com.junit.wiremock.service;
 
+import com.junit.wiremock.client.EmailValidationClient;
+import com.junit.wiremock.dto.EmailValidationResponse;
 import com.junit.wiremock.entity.User;
 import com.junit.wiremock.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -18,6 +20,9 @@ public class UserServiceImplTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private EmailValidationClient emailValidationClient;
 
     @InjectMocks
     private UserServiceImpl userService;
@@ -78,12 +83,19 @@ public class UserServiceImplTest {
         savedUser.setName("João");
         savedUser.setEmail("joao@email.com");
         
+        EmailValidationResponse validationResponse = new EmailValidationResponse();
+        validationResponse.setEmail("joao@email.com");
+        validationResponse.setValid(true);
+        validationResponse.setReason("Valid email");
+        
+        when(emailValidationClient.validateEmail("joao@email.com")).thenReturn(validationResponse);
         when(userRepository.save(user)).thenReturn(savedUser);
 
         User result = userService.createUser(user);
 
         assertNotNull(result.getId());
         assertEquals("João", result.getName());
+        verify(emailValidationClient).validateEmail("joao@email.com");
         verify(userRepository).save(user);
     }
 

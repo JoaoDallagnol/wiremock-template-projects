@@ -12,3 +12,8 @@ spring:
   h2:
     console:
       enabled: true
+
+email:
+  validation:
+    api:
+      url: https://api.emailvalidation.com
