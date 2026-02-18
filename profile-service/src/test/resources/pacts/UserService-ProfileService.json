@@ -1,0 +1,111 @@
+{
+  "consumer": {
+    "name": "UserService"
+  },
+  "provider": {
+    "name": "ProfileService"
+  },
+  "interactions": [
+    {
+      "description": "get profile for existing user 123",
+      "providerState": "profile exists for user 123",
+      "request": {
+        "method": "GET",
+        "path": "/profiles/123",
+        "headers": {
+          "Accept": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "userId": "123",
+          "avatar": "https://example.com/avatar1.jpg",
+          "theme": "dark",
+          "language": "pt-BR"
+        },
+        "matchingRules": {
+          "body": {
+            "$.userId": {
+              "match": "type"
+            },
+            "$.avatar": {
+              "match": "regex",
+              "regex": "^https?://.*"
+            },
+            "$.theme": {
+              "match": "type"
+            },
+            "$.language": {
+              "match": "type"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "get profile for non-existing user 999",
+      "providerState": "profile does not exist for user 999",
+      "request": {
+        "method": "GET",
+        "path": "/profiles/999"
+      },
+      "response": {
+        "status": 404
+      }
+    },
+    {
+      "description": "create new profile for user",
+      "providerState": "profile service is available",
+      "request": {
+        "method": "POST",
+        "path": "/profiles",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "userId": "789",
+          "avatar": "https://example.com/avatar3.jpg",
+          "theme": "light",
+          "language": "en-US"
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "userId": "789",
+          "avatar": "https://example.com/avatar3.jpg",
+          "theme": "light",
+          "language": "en-US"
+        },
+        "matchingRules": {
+          "body": {
+            "$.userId": {
+              "match": "type"
+            },
+            "$.avatar": {
+              "match": "type"
+            },
+            "$.theme": {
+              "match": "type"
+            },
+            "$.language": {
+              "match": "type"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  }
+}
