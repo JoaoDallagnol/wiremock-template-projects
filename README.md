@@ -2,6 +2,13 @@
 
 This repository contains practical examples of WireMock integration with different testing approaches in Java/Spring Boot applications. It demonstrates three main use cases for mocking external APIs during testing.
 
+## 📚 Related Articles
+
+This project was created as a companion to the following articles:
+
+- 🇺🇸 English: [WireMock: Main Use Cases in Practice](https://medium.com/@jvdallagnol2001/wiremock-main-use-cases-in-practice-9ce7523a2b72)
+- 🇧🇷 Portuguese (PT-BR): [WireMock: Principais Casos de Uso na Prática](https://medium.com/@jvdallagnol2001/wiremock-principais-casos-de-uso-na-prática-8cf733d41222)
+
 ## 📋 Use Cases
 
 ### 1. WireMock + JUnit 5 + Spring Boot
